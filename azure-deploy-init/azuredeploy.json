@@ -179,7 +179,7 @@
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_D2s_v3"
+                    "vmSize": "Standard_NC6_Promo"
                 },
                 "osProfile": {
                     "computerName": "[parameters('vmName')]",

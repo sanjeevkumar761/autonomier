@@ -42,34 +42,34 @@ export azureacr_user=publictoken
 export azureacr_token=2Lq4uQU9797zdf1Ym=ugoKfwGvhd0AWJ
 
 # az acr login --name souveniracr --username $2 --password $3 
-az acr login --name souveniracr --username $azureacr_user --password $azureacr_token
-docker pull souveniracr.azurecr.io/kubeapps/dashboard
+az acr login --name autonomier --username $azureacr_user --password $azureacr_token
+docker pull autonomier.azurecr.io/kubeapps/dashboard
 
 export HELM_EXPERIMENTAL_OCI=1
-echo $azureacr_token | helm registry login souveniracr.azurecr.io \
+echo $azureacr_token | helm registry login autonomier.azurecr.io \
   --username $azureacr_user \
   --password-stdin
 
-helm chart pull souveniracr.azurecr.io/helm/kubeapps:v1
-helm chart export souveniracr.azurecr.io/helm/kubeapps:v1 \
+helm chart pull autonomier.azurecr.io/helm/kubeapps:v1
+helm chart export autonomier.azurecr.io/helm/kubeapps:v1 \
   --destination ./install
 
 cd install
 helm dependency update kubeapps
 sudo helm install kubeapps --namespace kubeapps ./kubeapps --set useHelm3=true
 
-sudo kubectl create namespace sap-azure-apps
-az acr login --name souveniracr --username $azureacr_user --password $azureacr_token 
-docker pull souveniracr.azurecr.io/souvenir/onetouchsapdeployment:latest
+sudo kubectl create namespace autonomier-apps
+az acr login --name autonomier --username $azureacr_user --password $azureacr_token 
+docker pull autonomier.azurecr.io/autonomier/apollo-deployment:latest
 export HELM_EXPERIMENTAL_OCI=1
-echo $azureacr_token | helm registry login souveniracr.azurecr.io \
+echo $azureacr_token | helm registry login autonomier.azurecr.io \
   --username $azureacr_user \
   --password-stdin
-helm chart pull souveniracr.azurecr.io/helm/one-touch-sap-deployment:v1
-helm chart export souveniracr.azurecr.io/helm/one-touch-sap-deployment:v1 \
+helm chart pull autonomier.azurecr.io/helm/apollo-deployment:v1
+helm chart export autonomier.azurecr.io/helm/apollo-deployment:v1 \
   --destination ./install
 cd install
-sudo helm install one-touch-sap-deployment --namespace sap-azure-apps ./one-touch-sap-deployment --set useHelm3=true
+sudo helm install one-touch-sap-deployment --namespace autonomier-apps ./apollo-deployment --set useHelm3=true
 
 sudo su
 
@@ -86,8 +86,8 @@ sudo kubectl create clusterrolebinding kubeapps-operator --clusterrole=cluster-a
 
 cd /home/juser
 sudo apt install -y npm 
-git clone https://sanjeku@dev.azure.com/sanjeku/souvenir/_git/souvenir-sap-azure-apps
-cd souvenir-sap-azure-apps
+git clone https://github.com/sanjeevkumar761/autonomier.git
+cd autonomier
 cd k8s-login-helper 
 npm install
 sudo su
@@ -97,7 +97,7 @@ sudo node index.js &
 sleep 2m
 sudo kubectl port-forward -n kubeapps svc/kubeapps 8080:80 --address 0.0.0.0 &
 sleep 1m
-sudo kubectl port-forward -n sap-azure-apps svc/one-touch-sap-deployment 8081:3000 --address 0.0.0.0 &
+sudo kubectl port-forward -n autonomier-apps svc/apollo-deployment 8081:3000 --address 0.0.0.0 &
 
 #sudo rm /var/lib/apt/lists/lock
 #sudo rm /var/cache/apt/archives/lock
