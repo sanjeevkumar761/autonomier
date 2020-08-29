@@ -229,7 +229,7 @@
                     "fileUris": [
                         "https://raw.githubusercontent.com/sanjeevkumar761/autonomier/master/azure-deploy-init/scripts/autonomier.sh"
                     ],
-                    "commandToExecute": "[concat('sh hello.sh ', variables('subscriptionId') , ' ' , variables('clientId') ,  ' ' , variables('clientSecret') ,  ' ' , variables('tenantId'), ' &' )]"
+                    "commandToExecute": "[concat('sh autonomier.sh ', variables('subscriptionId') , ' ' , variables('clientId') ,  ' ' , variables('clientSecret') ,  ' ' , variables('tenantId'), ' &' )]"
                 }
             }
         }
