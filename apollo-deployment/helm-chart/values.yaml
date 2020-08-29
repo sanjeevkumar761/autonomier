@@ -9,6 +9,7 @@ image:
   repository: autonomier.azurecr.io/autonomier/apollo-deployment:3.5
   tag: latest
   pullPolicy: IfNotPresent
+  command: ['sh', '-c', 'echo -e '#!/usr/bin/expect -f' >> apollo_build.sh && echo "set timeout -1" >> apollo_build.sh && echo "spawn ./docker/scripts/dev_start.sh" >> apollo_build.sh && echo expect '"Type 'y' or 'Y' to agree to the license agreement above, or type any other key to exit\r"' >> apollo_build.sh && chmod +x apollo_build.sh && echo "./apollo_build.sh" >> full_apollo_build.sh && echo "./apollo.sh build_gpu" >> full_apollo_build.sh && chmod +x full_apollo_build.sh  && ./full_apollo_build.sh && ./scripts/bootstrap.sh']
   # Overrides the image tag whose default is the chart appVersion.
 
 env:
@@ -22,7 +23,9 @@ serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # Annotations to add to the service account
-  annotations: {}
+  annotations: {
+     "helm.sh/hook": "post-install"
+  }
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""

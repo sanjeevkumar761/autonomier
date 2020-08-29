@@ -35,11 +35,7 @@ cd /home/juser
 git clone https://github.com/sanjeevkumar761/autonomier.git
 git clone --recurse-submodules https://github.com/lgsvl/apollo-3.5.git
 cd apollo-3.5
-cp ../autonomier/answer_user_agreement_and_build_apoolo.sh .
-apt-get install expect -y
-chmod +x autonomier/answer_user_agreement_and_build_apoolo.sh
-./autonomier/answer_user_agreement_and_build_apoolo.sh
-
+echo -e '#!/usr/bin/expect -f' >> apollo_build.sh && echo "set timeout -1" >> apollo_build.sh && echo "spawn ./docker/scripts/dev_start.sh" >> apollo_build.sh && echo expect '"Type 'y' or 'Y' to agree to the license agreement above, or type any other key to exit\r"' >> apollo_build.sh && chmod +x apollo_build.sh && echo "./apollo_build.sh" >> full_apollo_build.sh && echo "./apollo.sh build_gpu" >> full_apollo_build.sh && chmod +x full_apollo_build.sh  && ./full_apollo_build.sh && ./scripts/bootstrap.sh
 export azureacr_user=publictoken
 export azureacr_token=xVfSSlhVm1PRz/dh6FbWIteJEir806Px
 

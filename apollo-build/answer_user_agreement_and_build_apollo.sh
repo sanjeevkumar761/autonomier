@@ -8,8 +8,4 @@ expect "Type 'y' or 'Y' to agree to the license agreement above, or type any oth
 
 send -- "y\r"
 
-./docker/scripts/dev_into.sh
-
-./apollo.sh build_gpu
-
- bootstrap.sh
+expect eof
