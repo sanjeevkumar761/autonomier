@@ -20,6 +20,35 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt install conntrack
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+#install nvidia drivers
+sudo apt-get install ubuntu-drivers-common -y
+sudo ubuntu-drivers autoinstall
+#Install nvidia-docker
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
+#install LG fork of apollo 5.5
+sudo docker pull lgsvl/apollo-3.5
+cd /home/juser
+git clone https://github.com/sanjeevkumar761/autonomier.git
+git clone --recurse-submodules https://github.com/lgsvl/apollo-3.5.git
+cd apollo-3.5
+cp ../autonomier/answer_user_agreement_and_build_apoolo.sh .
+apt-get install expect -y
+chmod +x autonomier/answer_user_agreement_and_build_apoolo.sh
+./autonomier/answer_user_agreement_and_build_apoolo.sh
+
+export azureacr_user=publictoken
+export azureacr_token=xVfSSlhVm1PRz/dh6FbWIteJEir806Px
+
+# az acr login --name souveniracr --username $2 --password $3 
+az acr login --name autonomier --username $azureacr_user --password $azureacr_token
+
+# docker tag lgsvl/apollo-3.5 autonomier.azurecr.io/autonomier/apollo-deployment:3.5
+# docker push autonomier.azurecr.io/autonomier/apollo-deployment:3.5
+
 #sudo usermod -aG docker $USER && newgrp docker
 sudo minikube start --driver=none
 sudo minikube status
@@ -38,12 +67,7 @@ sudo curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 sudo kubectl create namespace kubeapps
 sudo su
 
-export azureacr_user=publictoken
-export azureacr_token=2Lq4uQU9797zdf1Ym=ugoKfwGvhd0AWJ
-
-# az acr login --name souveniracr --username $2 --password $3 
-az acr login --name autonomier --username $azureacr_user --password $azureacr_token
-docker pull autonomier.azurecr.io/kubeapps/dashboard
+docker pull autonomier.azurecr.io/kubeapps/dashboard:latest
 
 export HELM_EXPERIMENTAL_OCI=1
 echo $azureacr_token | helm registry login autonomier.azurecr.io \
@@ -60,7 +84,7 @@ sudo helm install kubeapps --namespace kubeapps ./kubeapps --set useHelm3=true
 
 sudo kubectl create namespace autonomier-apps
 az acr login --name autonomier --username $azureacr_user --password $azureacr_token 
-docker pull autonomier.azurecr.io/autonomier/apollo-deployment:latest
+docker pull autonomier.azurecr.io/autonomier/apollo-deployment:3.5
 export HELM_EXPERIMENTAL_OCI=1
 echo $azureacr_token | helm registry login autonomier.azurecr.io \
   --username $azureacr_user \
@@ -84,10 +108,8 @@ sudo kubectl create serviceaccount kubeapps-operator
 sudo kubectl create clusterrolebinding kubeapps-operator --clusterrole=cluster-admin --serviceaccount=default:kubeapps-operator
 
 
-cd /home/juser
 sudo apt install -y npm 
-git clone https://github.com/sanjeevkumar761/autonomier.git
-cd autonomier
+cd /home/juser/autonomier
 cd k8s-login-helper 
 npm install
 sudo su

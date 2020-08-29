@@ -1,0 +1,2 @@
+You can access the app by using the following URL:
+<jumpboxlinux VM IP>:8081
