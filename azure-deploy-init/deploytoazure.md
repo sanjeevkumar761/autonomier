@@ -11,7 +11,7 @@ If you use exitsing Service Principal, please make sure to copy appId and passwo
 
 ## To deploy Autonomier on Azure, Click the button below:  
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://raw.githubusercontent.com/sanjeevkumar761/autonomier/master/azure-deploy-init/azuredeploy.json)  
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://ms.portal.azure.com/#create/Microsoft.Template/uri/raw.githubusercontent.com/sanjeevkumar761/autonomier/master/azure-deploy-init/azuredeploy.json)  
 
 Altrenatively, yon can initiate the deployment using Azure CLI. 
 
