@@ -24,14 +24,16 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 sudo apt-get install ubuntu-drivers-common -y
 sudo ubuntu-drivers autoinstall
 #START of Install nvidia-docker
-#distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-#curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
-#curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-#sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
-#sudo systemctl restart docker
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
+sleep 1m
 #END of Install nvidia-docker
 #install LG fork of apollo 5.5
 sudo docker pull lgsvl/apollo-3.5
+sleep 2m
 apt-get install expect -y
 cd /home/juser
 git clone https://github.com/sanjeevkumar761/autonomier.git
@@ -54,6 +56,7 @@ cd apollo-3.5
 cp ../autonomier/apollo-build/answer_user_agreement_and_build_apollo.sh .
 chmod +x answer_user_agreement_and_build_apollo.sh
 ./answer_user_agreement_and_build_apollo.sh
+sleep 1m
 ./docker/scripts/dev_into.sh
 ./apollo.sh build_gpu
 ./scripts/bootstrap.sh
