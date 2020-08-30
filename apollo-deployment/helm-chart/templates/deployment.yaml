@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "one-touch-sap-deployment.fullname" . }}
+  name: {{ include "autonomier-deployment.fullname" . }}
   labels:
-    {{- include "one-touch-sap-deployment.labels" . | nindent 4 }}
+    {{- include "autonomier-deployment.labels" . | nindent 4 }}
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
 {{- end }}
   selector:
     matchLabels:
-      {{- include "one-touch-sap-deployment.selectorLabels" . | nindent 6 }}
+      {{- include "autonomier-deployment.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "one-touch-sap-deployment.selectorLabels" . | nindent 8 }}
+        {{- include "autonomier-deployment.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "one-touch-sap-deployment.serviceAccountName" . }}
+      serviceAccountName: {{ include "autonomier-deployment.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -60,3 +60,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+ 
