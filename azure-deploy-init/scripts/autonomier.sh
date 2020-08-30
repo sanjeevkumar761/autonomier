@@ -45,6 +45,19 @@ az acr login --name autonomier --username $azureacr_user --password $azureacr_to
 # docker tag lgsvl/apollo-3.5 autonomier.azurecr.io/autonomier/apollo-deployment:3.5
 # docker push autonomier.azurecr.io/autonomier/apollo-deployment:3.5
 
+# START bare docker
+# apollo is not ready for Kubernetes yet, hence using bare docker 
+docker pull autonomier.azurecr.io/autonomier/apollo-deployment:3.5
+# echo -e '#!/usr/bin/expect -f' >> apollo_build.sh && echo "set timeout -1" >> apollo_build.sh && echo "spawn ./docker/scripts/dev_start.sh" >> apollo_build.sh && echo expect '"Type 'y' or 'Y' to agree to the license agreement above, or type any other key to exit\r"' >> apollo_build.sh && chmod +x apollo_build.sh && echo "./apollo_build.sh" >> full_apollo_build.sh && echo "./apollo.sh build_gpu" >> full_apollo_build.sh && chmod +x full_apollo_build.sh  && ./full_apollo_build.sh && ./scripts/bootstrap.sh
+cp ../autonomier/apollo-build/answer_user_agreement_and_build_apollo.sh .
+chmod +x answer_user_agreement_and_build_apollo.sh
+./answer_user_agreement_and_build_apollo.sh
+./docker/scripts/dev_into.sh
+./apollo.sh build_gpu
+./scripts/bootstrap.sh
+# END bare docker 
+
+
 #sudo usermod -aG docker $USER && newgrp docker
 sudo minikube start --driver=none
 sudo minikube status
