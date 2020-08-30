@@ -59,78 +59,66 @@ chmod +x answer_user_agreement_and_build_apollo.sh
 # END bare docker 
 
 
-#sudo usermod -aG docker $USER && newgrp docker
-sudo minikube start --driver=none
-sudo minikube status
-wget https://get.helm.sh/helm-v3.3.0-rc.1-linux-amd64.tar.gz
-tar -zxvf helm-v3.3.0-rc.1-linux-amd64.tar.gz
-sudo mv linux-amd64/helm /usr/local/bin/helm
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-sudo mv ./kubectl /usr/local/bin/kubectl
-kubectl version --client
-sudo apt-get update && sudo apt-get -y install socat
-sudo curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+#sudo minikube start --driver=none
+#sudo minikube status
+#wget https://get.helm.sh/helm-v3.3.0-rc.1-linux-amd64.tar.gz
+#tar -zxvf helm-v3.3.0-rc.1-linux-amd64.tar.gz
+#sudo mv linux-amd64/helm /usr/local/bin/helm
+#curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+#chmod +x ./kubectl
+#sudo mv ./kubectl /usr/local/bin/kubectl
+#kubectl version --client
+#sudo apt-get update && sudo apt-get -y install socat
+#sudo curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 
 
-sudo kubectl create namespace kubeapps
-sudo su
+#sudo kubectl create namespace kubeapps
+#sudo su
 
-docker pull autonomier.azurecr.io/kubeapps/dashboard:latest
+#docker pull autonomier.azurecr.io/kubeapps/dashboard:latest
 
-export HELM_EXPERIMENTAL_OCI=1
-echo $azureacr_token | helm registry login autonomier.azurecr.io \
-  --username $azureacr_user \
-  --password-stdin
+#export HELM_EXPERIMENTAL_OCI=1
+#echo $azureacr_token | helm registry login autonomier.azurecr.io \
+#  --username $azureacr_user \
+#  --password-stdin
 
-helm chart pull autonomier.azurecr.io/helm/kubeapps:v1
-helm chart export autonomier.azurecr.io/helm/kubeapps:v1 \
-  --destination ./install
-
-cd install
-helm dependency update kubeapps
-sudo helm install kubeapps --namespace kubeapps ./kubeapps --set useHelm3=true
-
-sudo kubectl create namespace autonomier-apps
-az acr login --name autonomier --username $azureacr_user --password $azureacr_token 
-docker pull autonomier.azurecr.io/autonomier/apollo-deployment:3.5
-export HELM_EXPERIMENTAL_OCI=1
-echo $azureacr_token | helm registry login autonomier.azurecr.io \
-  --username $azureacr_user \
-  --password-stdin
-helm chart pull autonomier.azurecr.io/helm/apollo-deployment:v1
-helm chart export autonomier.azurecr.io/helm/apollo-deployment:v1 \
-  --destination ./install
-cd install
-sudo helm install one-touch-sap-deployment --namespace autonomier-apps ./apollo-deployment --set useHelm3=true
-
-sudo su
-
-# helm chart pull souveniracr.azurecr.io/helm/kubeapps:v1
-# helm chart export souveniracr.azurecr.io/helm/kubeapps:v1 \
+#helm chart pull autonomier.azurecr.io/helm/kubeapps:v1
+#helm chart export autonomier.azurecr.io/helm/kubeapps:v1 \
 #  --destination ./install
 
-# sudo helm repo add bitnami https://charts.bitnami.com/bitnami
+#cd install
+#helm dependency update kubeapps
+#sudo helm install kubeapps --namespace kubeapps ./kubeapps --set useHelm3=true
 
-# cd install
-sudo kubectl create serviceaccount kubeapps-operator
-sudo kubectl create clusterrolebinding kubeapps-operator --clusterrole=cluster-admin --serviceaccount=default:kubeapps-operator
+#sudo kubectl create namespace autonomier-apps
+#az acr login --name autonomier --username $azureacr_user --password $azureacr_token 
+#docker pull autonomier.azurecr.io/autonomier/apollo-deployment:3.5
+#export HELM_EXPERIMENTAL_OCI=1
+#echo $azureacr_token | helm registry login autonomier.azurecr.io \
+#  --username $azureacr_user \
+#  --password-stdin
+#helm chart pull autonomier.azurecr.io/helm/apollo-deployment:v1
+#helm chart export autonomier.azurecr.io/helm/apollo-deployment:v1 \
+#  --destination ./install
+#cd install
+#sudo helm install one-touch-sap-deployment --namespace autonomier-apps ./apollo-deployment --set useHelm3=true
+
+#sudo su
+
+#sudo kubectl create serviceaccount kubeapps-operator
+#sudo kubectl create clusterrolebinding kubeapps-operator --clusterrole=cluster-admin --serviceaccount=default:kubeapps-operator
 
 
-sudo apt install -y npm 
-cd /home/juser/autonomier
-cd k8s-login-helper 
-npm install
-sudo su
-export HOST=0.0.0.0
-sudo node index.js &
+#sudo apt install -y npm 
+#cd /home/juser/autonomier
+#cd k8s-login-helper 
+#npm install
+#sudo su
+#export HOST=0.0.0.0
+#sudo node index.js &
 
-sleep 2m
-sudo kubectl port-forward -n kubeapps svc/kubeapps 8080:80 --address 0.0.0.0 &
-sleep 1m
-sudo kubectl port-forward -n autonomier-apps svc/apollo-deployment 8081:3000 --address 0.0.0.0 &
-
-#sudo rm /var/lib/apt/lists/lock
-#sudo rm /var/cache/apt/archives/lock
-#sudo rm /var/lib/dpkg/lock*
+#sleep 2m
+#sudo kubectl port-forward -n kubeapps svc/kubeapps 8080:80 --address 0.0.0.0 &
+#sleep 1m
+#sudo kubectl port-forward -n autonomier-apps svc/apollo-deployment 8081:3000 --address 0.0.0.0 &
