@@ -1,13 +1,11 @@
 # Deploy autonomier on Azure
 This is the repository for autonomier framework. The current release of autonomier automates the deployment of Apollo autonomous vehicle platform for software simulation (only for software based silmulation, not to be used in real vehicles) on Azure.   
 
-*You agree to the dislaimer mentioned at the bottom of this page, when you proceed further with the details and steps given below.*
+*You agree to the dislaimer mentioned at the bottom of this page and you agree to license requirements of various open source tools which are used in autonomier repository, when you proceed further with the details and steps given below.*
 
 This creates infrastructure on Microsoft Azure and installs Autonomier framework which is based on open source repositories from Apollo autonomous vehicle platform, LG fork of Apollo autonomous vehicle platform 3.5, LG Automotive Simulator, nvidia-docker and Kubeapps framework.   
 
 It uses a fork of [Apollo](https://github.com/ApolloAuto/apollo/) maintained by the LG Electronics Silicon Valley Lab here [LG Silicon Valley Lab Apollo 3.5 Fork](https://github.com/lgsvl/apollo-3.5/) which has modified and configured to facilitate use with LG's Automotive Simulator.
-
-You agree to license requirements of various open source tools which are used in autonomier repository. 
 
 It takes about 45-60 minutes for full deployment process to complete. Please follow the steps mentioned below:    
 
