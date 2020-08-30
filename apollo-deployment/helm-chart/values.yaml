@@ -6,8 +6,8 @@ replicaCount: 1
 
 image:
   registry:  autonomier.azurecr.io
-  repository: autonomier.azurecr.io/autonomier/apollo-deployment:3.5
-  tag: latest
+  repository: autonomier.azurecr.io/autonomier/apollo-deployment
+  tag: 3.5
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
 
