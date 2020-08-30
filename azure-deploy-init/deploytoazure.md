@@ -16,6 +16,7 @@ If you use exitsing Service Principal, please make sure to copy appId and passwo
 ## To deploy autonomier on Azure, Click the button below:  
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsanjeevkumar761%2Fautonomier%2Fmaster%2Fazure-deploy-init%2Fazuredeploy.json)  
+Detailed installation steps are mentioned here https://sanjeevkumar.blog/2020/08/30/how-to-deploy-apollo-autonomous-vehicle-platform-on-azure-with-autonomier/ .  
 
 Altrenatively, yon can initiate the deployment using Azure CLI. 
 
