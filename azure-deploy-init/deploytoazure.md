@@ -1,5 +1,5 @@
-# Deploy Autonomier on Azure
-This is the repository for Autonomier framework for autonomous vehicle software simulation (ony for software based silmulation, not to be used in real vehicles).   
+# Deploy autonomier on Azure
+This is the repository for autonomier framework for autonomous vehicle software simulation (ony for software based silmulation, not to be used in real vehicles).   
 
 *You agree to the dislaimer mentioned at the bottom of this page, when you proceed further with the details and steps given below.*
 
@@ -7,15 +7,15 @@ This creates infrastructure on Microsoft Azure and installs Autonomier framework
 
 It uses a fork of [Apollo](https://github.com/ApolloAuto/apollo/) maintained by the LG Electronics Silicon Valley Lab here [LG Silicon Valley Lab Apollo 3.5 Fork](https://github.com/lgsvl/apollo-3.5/) which has modified and configured to facilitate use with LG's Automotive Simulator.
 
-You agree to license requirements of various open source tools which are used in Autonomier repository. 
+You agree to license requirements of various open source tools which are used in autonomier repository. 
 
-It takes about 60 minutes for full deployment process to complete. Please follow the steps mentioned below:    
+It takes about 45-60 minutes for full deployment process to complete. Please follow the steps mentioned below:    
 
 ## Getting ready:  
 Create Service Principal using Azure Cloud Shell /AZ CLI with command "az ad sp create-for-rbac". Save details as you'll need those later.    
 If you use exitsing Service Principal, please make sure to copy appId and password/secret correctly.  
 
-## To deploy Autonomier on Azure, Click the button below:  
+## To deploy autonomier on Azure, Click the button below:  
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://ms.portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fsanjeevkumar761%2Fautonomier%2Fmaster%2Fazure-deploy-init%2Fazuredeploy.json)  
 
@@ -24,7 +24,7 @@ Altrenatively, yon can initiate the deployment using Azure CLI.
 ## How to check installation progress:   
 1\) Wait for initial deployment to complete in Azure portal. You'll see the message "Your deployment is complete" in Azure portal. It deploys a jumpbox on Azure  
 2\) Go to your Resource Group in Azure portal, locate the VM named "jumpboxlinux" and look for its Public IP address  
-3\) *Wait for about 30 minutes* for installation inside jumpboxlinux VM to be ready \(It prepares automatically in background\)   
+3\) *Wait for about 40 minutes* for installation inside jumpboxlinux VM to be ready \(It prepares automatically in background\)   
 4\) You can use Dreamview on URL http://\<public IP of your jumpboxlinux VM\>:8888  
 
 
