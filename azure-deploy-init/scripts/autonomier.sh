@@ -56,10 +56,11 @@ cd apollo-3.5
 cp ../autonomier/apollo-build/answer_user_agreement_and_build_apollo.sh .
 chmod +x answer_user_agreement_and_build_apollo.sh
 ./answer_user_agreement_and_build_apollo.sh
-sleep 1m
+echo "Starting build and bootstrap"
 #./docker/scripts/dev_into.sh
-sudo docker exec -it apollo_dev_ bash -c "./apollo.sh build_gpu ; ./scripts/bootstrap.sh" > autonomier_build.log
+bash -c 'docker exec -it apollo_dev_ bash -c "./apollo.sh build_gpu ; ./scripts/bootstrap.sh" > /home/juser/autonomier_build.log'
 echo "Finished build and bootstrap"
+cat /home/juser/autonomier_build.log
 # END bare docker 
 
 
