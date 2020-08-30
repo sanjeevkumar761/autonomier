@@ -57,9 +57,8 @@ cp ../autonomier/apollo-build/answer_user_agreement_and_build_apollo.sh .
 chmod +x answer_user_agreement_and_build_apollo.sh
 ./answer_user_agreement_and_build_apollo.sh
 sleep 1m
-./docker/scripts/dev_into.sh
-./apollo.sh build_gpu
-./scripts/bootstrap.sh
+#./docker/scripts/dev_into.sh
+docker exec -it apollo_dev_ bash -c "./apollo.sh build_gpu ; ./scripts/bootstrap.sh" 
 # END bare docker 
 
 
