@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "one-touch-sap-deployment.name" -}}
+{{- define "autonomier-deployment.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "one-touch-sap-deployment.fullname" -}}
+{{- define "autonomier-deployment.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "one-touch-sap-deployment.chart" -}}
+{{- define "autonomier-deployment.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "one-touch-sap-deployment.labels" -}}
-helm.sh/chart: {{ include "one-touch-sap-deployment.chart" . }}
-{{ include "one-touch-sap-deployment.selectorLabels" . }}
+{{- define "autonomier-deployment.labels" -}}
+helm.sh/chart: {{ include "autonomier-deployment.chart" . }}
+{{ include "autonomier-deployment.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "one-touch-sap-deployment.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "one-touch-sap-deployment.name" . }}
+{{- define "autonomier-deployment.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "autonomier-deployment.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "one-touch-sap-deployment.serviceAccountName" -}}
+{{- define "autonomier-deployment.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "one-touch-sap-deployment.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "autonomier-deployment.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "one-touch-sap-deployment.fullname" . }}
+  name: {{ include "autonomier-deployment.fullname" . }}
   labels:
-    {{- include "one-touch-sap-deployment.labels" . | nindent 4 }}
+    {{- include "autonomier-deployment.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "one-touch-sap-deployment.fullname" . }}
+    name: {{ include "autonomier-deployment.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
