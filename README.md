@@ -1,5 +1,5 @@
 # autonomier
-Repository for autonomier framework for autonomous vehicle software simulation (ony for software based silmulation, not to be used in real vehicles).   
+This is the repository for autonomier framework. The current release of autonomier automates the deployment of Apollo autonomous vehicle platform for software simulation (only for software based silmulation, not to be used in real vehicles) on Azure.   
 
 *You agree to the dislaimer mentioned at the bottom of this page, when you proceed further with the details and steps given below.*   
 
