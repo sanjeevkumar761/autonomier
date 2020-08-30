@@ -23,12 +23,13 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 #install nvidia drivers
 sudo apt-get install ubuntu-drivers-common -y
 sudo ubuntu-drivers autoinstall
-#Install nvidia-docker
-distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
-curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
-sudo systemctl restart docker
+#START of Install nvidia-docker
+#distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+#curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+#curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+#sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+#sudo systemctl restart docker
+#END of Install nvidia-docker
 #install LG fork of apollo 5.5
 sudo docker pull lgsvl/apollo-3.5
 apt-get install expect -y
@@ -37,18 +38,18 @@ git clone https://github.com/sanjeevkumar761/autonomier.git
 git clone --recurse-submodules https://github.com/lgsvl/apollo-3.5.git
 cd apollo-3.5
 # echo -e '#!/usr/bin/expect -f' >> apollo_build.sh && echo "set timeout -1" >> apollo_build.sh && echo "spawn ./docker/scripts/dev_start.sh" >> apollo_build.sh && echo expect '"Type 'y' or 'Y' to agree to the license agreement above, or type any other key to exit\r"' >> apollo_build.sh && chmod +x apollo_build.sh && echo "./apollo_build.sh" >> full_apollo_build.sh && echo "./apollo.sh build_gpu" >> full_apollo_build.sh && chmod +x full_apollo_build.sh  && ./full_apollo_build.sh && ./scripts/bootstrap.sh
-export azureacr_user=publictoken
-export azureacr_token=xVfSSlhVm1PRz/dh6FbWIteJEir806Px
+# export azureacr_user=publictoken
+# export azureacr_token=xVfSSlhVm1PRz/dh6FbWIteJEir806Px
 
 # az acr login --name souveniracr --username $2 --password $3 
-az acr login --name autonomier --username $azureacr_user --password $azureacr_token
+# az acr login --name autonomier --username $azureacr_user --password $azureacr_token
 
 # docker tag lgsvl/apollo-3.5 autonomier.azurecr.io/autonomier/apollo-deployment:3.5
 # docker push autonomier.azurecr.io/autonomier/apollo-deployment:3.5
 
 # START bare docker
 # apollo is not ready for Kubernetes yet, hence using bare docker 
-docker pull autonomier.azurecr.io/autonomier/apollo-deployment:3.5
+# docker pull autonomier.azurecr.io/autonomier/apollo-deployment:3.5
 # echo -e '#!/usr/bin/expect -f' >> apollo_build.sh && echo "set timeout -1" >> apollo_build.sh && echo "spawn ./docker/scripts/dev_start.sh" >> apollo_build.sh && echo expect '"Type 'y' or 'Y' to agree to the license agreement above, or type any other key to exit\r"' >> apollo_build.sh && chmod +x apollo_build.sh && echo "./apollo_build.sh" >> full_apollo_build.sh && echo "./apollo.sh build_gpu" >> full_apollo_build.sh && chmod +x full_apollo_build.sh  && ./full_apollo_build.sh && ./scripts/bootstrap.sh
 cp ../autonomier/apollo-build/answer_user_agreement_and_build_apollo.sh .
 chmod +x answer_user_agreement_and_build_apollo.sh
